@@ -58,5 +58,13 @@ jobber_book = load_workbook('jobber.xlsx')
 
 jobber_sheet = jobber_book.active
 
-print('Total number of rows: '+str(jobber_sheet.max_row)+'. And total number of columns: '+str(jobber_sheet.max_column))
+#print('Total number of rows: '+str(jobber_sheet.max_row)+'. And total number of columns: '+str(jobber_sheet.max_column))
+
+#Initialize empty list for storing 4 - digit numbers
+all_part_num = []
+
+for row in jobber_sheet.iter_cols(min_col=3, max_col=3):
+    for cell in row:
+        all_part_num.append(cell.value)
+
 
