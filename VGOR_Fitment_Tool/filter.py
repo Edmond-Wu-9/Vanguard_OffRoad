@@ -49,17 +49,14 @@ done_button.pack(side=tk.LEFT , fill=tk.X , expand=True)
 review_button = tk.Button(root, text="Review", command=review_file)
 review_button.pack(side=tk.LEFT , fill=tk.X , expand=True)
 
-root.mainloop()
+#root.mainloop()
 
 # Open excel files for reading 
 # Maybe add a function to give the option to upload a file 
 jobber_book = load_workbook('jobber.xlsx')
 #aces_book = load_workbook('aces.xlsm') This shit takes forever to load 
-
 jobber_sheet = jobber_book.active
-
-#Initialize empty list for storing 4 - digit numbers
-all_part_num = []
+all_part_num = [] #Initialize empty list for storing part num
 
 #Reading the jobber file 3rd column
 for row in jobber_sheet.iter_cols(min_col=3, max_col=3):
@@ -71,6 +68,7 @@ del all_part_num [0:3]
 loading_list = open("loading_list.txt" , "r")
 loading_list_parts = loading_list.readlines()
 loading_list_parts = [element.strip() for element in loading_list_parts] # Removes \n
+
 
 #Filters all_part_num using loading_list_parts and outputs filter parts into filter_part.txt
 with open("filtered_parts.txt", "a") as output_file:
