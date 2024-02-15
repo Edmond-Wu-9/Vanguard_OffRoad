@@ -49,7 +49,7 @@ done_button.pack(side=tk.LEFT , fill=tk.X , expand=True)
 review_button = tk.Button(root, text="Review", command=review_file)
 review_button.pack(side=tk.LEFT , fill=tk.X , expand=True)
 
-#root.mainloop()
+root.mainloop()
 
 # Open excel files for reading 
 # Maybe add a function to give the option to upload a file 
@@ -57,8 +57,6 @@ jobber_book = load_workbook('jobber.xlsx')
 #aces_book = load_workbook('aces.xlsm') This shit takes forever to load 
 
 jobber_sheet = jobber_book.active
-
-#print('Total number of rows: '+str(jobber_sheet.max_row)+'. And total number of columns: '+str(jobber_sheet.max_column))
 
 #Initialize empty list for storing 4 - digit numbers
 all_part_num = []
@@ -74,7 +72,15 @@ loading_list = open("loading_list.txt" , "r")
 loading_list_parts = loading_list.readlines()
 loading_list_parts = [element.strip() for element in loading_list_parts] # Removes \n
 
-for number in loading_list_parts:
-    filtered_items = [item for item in all_part_num if number in item]
-    print(filtered_items)
+#Filters all_part_num using loading_list_parts and outputs filter parts into filter_part.txt
+with open("filtered_parts.txt", "a") as output_file:
+    for number in loading_list_parts:
+        filtered_items = [item for item in all_part_num if number in item]
+        if filtered_items:
+            output_file.write(f"Part Number : {number}\n")
+            for item in filtered_items:
+                output_file.write(f"- {item}\n")
+            output_file.write("\n")
+        else:
+            print(f"No items found for part {number}")
 
