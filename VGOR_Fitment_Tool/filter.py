@@ -75,5 +75,6 @@ loading_list_parts = loading_list.readlines()
 loading_list_parts = [element.strip() for element in loading_list_parts] # Removes \n
 
 for number in loading_list_parts:
-    filtered_items = [item for item in all_part_num if item[:4] == number]
+    filtered_items = [item for item in all_part_num if number in item]
     print(filtered_items)
+
