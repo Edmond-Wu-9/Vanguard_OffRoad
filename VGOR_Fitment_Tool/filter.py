@@ -63,8 +63,17 @@ jobber_sheet = jobber_book.active
 #Initialize empty list for storing 4 - digit numbers
 all_part_num = []
 
+#Reading the jobber file 3rd column
 for row in jobber_sheet.iter_cols(min_col=3, max_col=3):
     for cell in row:
         all_part_num.append(cell.value)
+del all_part_num [0:3]
 
+#Reads the loading list into a list 
+loading_list = open("loading_list.txt" , "r")
+loading_list_parts = loading_list.readlines()
+loading_list_parts = [element.strip() for element in loading_list_parts] # Removes \n
 
+for number in loading_list_parts:
+    filtered_items = [item for item in all_part_num if item[:4] == number]
+    print(filtered_items)
