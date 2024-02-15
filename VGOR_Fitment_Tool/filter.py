@@ -5,8 +5,9 @@ Author = Edmond Wu
 ''' 
 import tkinter as tk
 from tkinter import messagebox
-import openpyxl 
+import openpyxl #install openpyxl through pip install openpyxl
 from openpyxl import load_workbook
+import pandas as pd #install pandas through pip install pandas
 
 
 ''' GUI For Tool
@@ -51,34 +52,39 @@ review_button.pack(side=tk.LEFT , fill=tk.X , expand=True)
 
 #root.mainloop()
 
-# Open excel files for reading 
-# Maybe add a function to give the option to upload a file 
-jobber_book = load_workbook('jobber.xlsx')
-#aces_book = load_workbook('aces.xlsm') This shit takes forever to load 
-jobber_sheet = jobber_book.active
-all_part_num = [] #Initialize empty list for storing part num
+def jobber_loading_filter():
+    # Open jobber file for reading 
+    # Maybe add a function to give the option to upload a file 
+    jobber_book = load_workbook('jobber.xlsx')
+    jobber_sheet = jobber_book.active
+    all_part_num = [] #Initialize empty list for storing part num
 
-#Reading the jobber file 3rd column
-for row in jobber_sheet.iter_cols(min_col=3, max_col=3):
-    for cell in row:
-        all_part_num.append(cell.value)
-del all_part_num [0:3]
+    #Reading the jobber file 3rd column
+    for row in jobber_sheet.iter_cols(min_col=3, max_col=3):
+        for cell in row:
+            all_part_num.append(cell.value)
+    del all_part_num [0:3]
 
-#Reads the loading list into a list 
-loading_list = open("loading_list.txt" , "r")
-loading_list_parts = loading_list.readlines()
-loading_list_parts = [element.strip() for element in loading_list_parts] # Removes \n
+    #Reads the loading list into a list 
+    loading_list = open("loading_list.txt" , "r")
+    loading_list_parts = loading_list.readlines()
+    loading_list_parts = [element.strip() for element in loading_list_parts] # Removes \n
 
 
-#Filters all_part_num using loading_list_parts and outputs filter parts into filter_part.txt
-with open("filtered_parts.txt", "a") as output_file:
-    for number in loading_list_parts:
-        filtered_items = [item for item in all_part_num if number in item]
-        if filtered_items:
-            output_file.write(f"Part Number : {number}\n")
-            for item in filtered_items:
-                output_file.write(f"- {item}\n")
-            output_file.write("\n")
-        else:
-            print(f"No items found for part {number}")
+    #Filters all_part_num using loading_list_parts and outputs filter parts into filter_part.txt
+    with open("filtered_parts.txt", "a") as output_file:
+        for number in loading_list_parts:
+            filtered_items = [item for item in all_part_num if number in item]
+            if filtered_items:
+                output_file.write(f"Part Number : {number}\n")
+                for item in filtered_items:
+                    output_file.write(f"- {item}\n")
+                output_file.write("\n")
+            else:
+                print(f"No items found for part {number}")
 
+#jobber_loading_filter()
+
+
+aces = pd.read_excel('aces_ss.xlsx', usecols=[1,8,9])
+aces_data = aces.values.tolist()
