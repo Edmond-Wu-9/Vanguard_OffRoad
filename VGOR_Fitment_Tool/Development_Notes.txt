@@ -1,0 +1,14 @@
+Goal 
+Check Jobber with ACES File 
+
+Version 1 = Basic check using Part Number , Year Start, Year End, Make, and Model 
+Jobber --> ['VGRB-2265BK', 2007, 2009, 'GMC', 'Canyon'] 
+ACES --> ['VGRB-2265BK', 2007, 'GMC', 'Canyon'] , ['VGRB-2265BK', 2008, 'GMC', 'Canyon'] , ['VGRB-2265BK', 2009, 'GMC', 'Canyon']
+Report Any Descrepancies
+
+NOTES:
+White Text Part # are not in ACES 
+Red Text Part # not in STOCK 
+V2 and V3 will probably have to look into Notes , Descriptions , etc. 
+
+Lots of submodels, so there are multiple of years
