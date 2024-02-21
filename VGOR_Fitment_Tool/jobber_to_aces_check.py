@@ -2,38 +2,43 @@ import pandas as pd
 
 #def product_coverage(jobber_file, aces_file):
 
+#Creates the Jobber Year Range 
+def g(df):
+    df['Jobber Year Range'] = df['Start Year'].astype(str) + ' - ' + df['End Year'].astype(str)
+    return df
+
 #Read the Jobber File 
 jobber_df = pd.read_excel('jobber.xlsx', usecols=[2,4,5,6,7])
 jobber_df = jobber_df.drop(index=[0,1])
 jobber_df.columns = ["Part Number","Start Year","End Year","Make","Model"]
-#print(jobber_df)
+jobber_df = jobber_df.dropna(subset=["Start Year", "End Year"])
+jobber_df = g(jobber_df)
+# jobber_df.to_excel("jobber_df.xlsx", index=False)
+
 
 #Read the Aces File
 aces_df = pd.read_excel('aces_ss.xlsx', usecols=[1,8,9,10,12])
 aces_df.columns = ["Part Number","Year","Make","Model", "Submodel"]
 aces_df = aces_df.drop(index=[0,1,2])
-#print(aces_df)
-
-#Filter out aces sheet with Part Number , Make, Model 
-aces_grouped = aces_df.groupby(["Part Number" , "Make" , "Model", "Submodel"]).agg(years=("Year", list))
+# aces_df.to_excel("aces_df.xlsx", index=False)
 
 #Merge both jobber and aces file together 
-merged_df = jobber_df.merge(aces_grouped, on=["Part Number","Make","Model"], how="left")
-merged_df = merged_df.dropna(subset=["Start Year", "End Year"])
-print(merged_df["Start Year"].isnull().sum())
-print(merged_df["End Year"].isnull().sum())
+aces_df = aces_df.groupby(["Part Number", "Make", "Model", "Submodel"])['Year'].apply(list)
+merged_df = pd.merge(aces_df, jobber_df['Part Number', 'Jobber Year Range'], on='Part Number', how='left')
+merged_df.to_excel("b4_group_merged_df.xlsx", index=False)
+# merged_group = merged_df.groupby(["Part Number", "Make", "Model", "Submodel", "Jobber Year Range"])['Year'].apply(list)
+# merged_df = merged_group.reset_index()
+
 
 
 # Check for duplicate years and store in a new column
 # Have to create a list in order to check for dups
 # def get_unique_years(row):
-#     return list(range(row["Start Year"], row["End Year"] + 1))
+#    return list(range(row["Start Year"], row["End Year"] + 1))
 
 # merged_df["Has Duplicates"] = merged_df.apply(
-#     lambda row: len(set(get_unique_years(row))) != len(get_unique_years(row)), axis=1
+#    lambda row: len(set(get_unique_years(row))) == len(get_unique_years(row)), axis=1
 # )
-
-# print(merged_df["Has Duplicates"])
 
 # # Check for mismatch: jobber range not fully covered by ACES years
 # merged_df["Mismatch"] = merged_df.apply(
