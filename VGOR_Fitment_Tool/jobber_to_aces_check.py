@@ -1,9 +1,7 @@
 import pandas as pd 
 
-#def product_coverage(jobber_file, aces_file):
-
 #Creates the Jobber Year Range 
-def g(df):
+def jyr(df):
     df['Jobber Year Range'] = df['Start Year'].astype(str) + ' - ' + df['End Year'].astype(str)
     return df
 
@@ -12,7 +10,7 @@ jobber_df = pd.read_excel('jobber.xlsx', usecols=[2,4,5,6,7])
 jobber_df = jobber_df.drop(index=[0,1])
 jobber_df.columns = ["Part Number","Start Year","End Year","Make","Model"]
 jobber_df = jobber_df.dropna(subset=["Start Year", "End Year"])
-jobber_df = g(jobber_df)
+jobber_df = jyr(jobber_df)
 
 
 #Read the Aces File
@@ -27,6 +25,10 @@ merged_group = merged_df.groupby(["Part Number", "Make", "Model", "Submodel","Jo
 merged_group = merged_group.reset_index()
 merged_group.columns = [["Part Number", "Make", "Model", "Submodel","Jobber Year Range","Year"]]
 merged_group.to_excel("merged_data.xlsx", index=False)
+
+#Exception Part Numbers in Jobber and Merged 
+jobber_not_in_aces = jobber_df[~jobber_df["Part Number"].isin(aces_df["Part Number"])]
+jobber_not_in_aces.to_excel("excluded.xlsx", index=False)
 
 
 # Check for duplicate years and store in a new column
