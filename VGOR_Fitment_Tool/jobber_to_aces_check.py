@@ -13,23 +13,20 @@ jobber_df = jobber_df.drop(index=[0,1])
 jobber_df.columns = ["Part Number","Start Year","End Year","Make","Model"]
 jobber_df = jobber_df.dropna(subset=["Start Year", "End Year"])
 jobber_df = g(jobber_df)
-print(jobber_df)
 
 
 #Read the Aces File
 aces_df = pd.read_excel('aces_ss.xlsx', usecols=[1,8,9,10,12])
 aces_df.columns = ["Part Number","Year","Make","Model", "Submodel"]
 aces_df = aces_df.drop(index=[0,1,2])
-# aces_df.to_excel("aces_df.xlsx", index=False)
+
 
 #Merge both jobber and aces file together 
-
-# Aggregate the data, reset the index, then add the jobber range 
-aces_group = aces_df.groupby(["Part Number", "Make", "Model", "Submodel"])['Year'].apply(list)
-aces_df = aces_group.reset_index()
-aces_df.columns = [["Part Number", "Make", "Model", "Submodel","Year"]]
-print(aces_df)
-
+merged_df = pd.merge(aces_df, jobber_df[['Part Number','Make','Model','Jobber Year Range']], left_on=["Part Number", "Make", "Model"], right_on=["Part Number", "Make", "Model"],how='left')
+merged_group = merged_df.groupby(["Part Number", "Make", "Model", "Submodel","Jobber Year Range"])['Year'].apply(list)
+merged_group = merged_group.reset_index()
+merged_group.columns = [["Part Number", "Make", "Model", "Submodel","Jobber Year Range","Year"]]
+merged_group.to_excel("merged_data.xlsx", index=False)
 
 
 # Check for duplicate years and store in a new column
