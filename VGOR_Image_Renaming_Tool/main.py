@@ -2,7 +2,7 @@ import os
 import re
 
 #Move directory to where all the Images are 
-image_dir = "C:\\Users\\edmon\\OneDrive\\Desktop\\Images_Filezilla_Old"
+image_dir = "C:\\Users\\edmon\\OneDrive\\Desktop\\Images_Filezilla"
 os.chdir(image_dir)
 
 #Gets all the file names into a variable called file_list
