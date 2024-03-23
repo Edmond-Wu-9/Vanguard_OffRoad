@@ -27,4 +27,4 @@ for filename in file_list:
                 count = count + 1
                 print(f"Skipped renaming {filename} (file {new_filename} already exists)")
 #rename_period()
-print(count)
+print(f"There are {count} files that have issues if changing the name")
