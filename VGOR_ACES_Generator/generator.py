@@ -5,7 +5,8 @@ from tkinter import filedialog, messagebox
 # Create a Frame for the GUI
 gui = tk.Tk()
 gui.title('ACES Generator')
-gui.geometry('500x500')
+gui.geometry('700x300')
+gui.resizable(False,False)
 
 # Function to generate the Jobber Path
 def load_jobber_file():
@@ -26,7 +27,7 @@ output_path = tk.StringVar()
 
 # Introduction for the GUI
 greeting = tk.Label(text="Welcome to the ACES Generator", font=("Agency FB", 30))
-greeting.grid()
+greeting.grid(row=0 , column=1, pady=10)
 
 # File Selection Section
 ## Jobber Section 
