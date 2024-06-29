@@ -1,9 +1,37 @@
 import pandas as pd 
-import tkinter 
+import tkinter as tk
+from tkinter import filedialog, messagebox
 
 # Create a Frame for the GUI
-gui = tkinter.Tk()
+gui = tk.Tk()
 gui.title('ACES Generator')
-gui.geometry('1400x700')
+gui.geometry('500x500')
+
+# Function to generate the Jobber Path
+def load_jobber_file():
+    jobber_path.set(filedialog.askopenfilename())
+
+# Function to generate the ACES Data File Path
+def load_aces_data_file():
+    aces_data_file.set(filedialog.askopenfilename())
+
+# Variables to store the file paths
+jobber_path = tk.StringVar()
+aces_data_file = tk.StringVar()
+
+# Introduction for the GUI
+greeting = tk.Label(text="Welcome to the ACES Generator", font=("Agency FB", 22))
+greeting.grid()
+
+# File Selection Section
+tk.Label(gui, text="Jobber File:", font=("Agency FB", 14)).grid(row=1, column=0, pady=2)
+tk.Entry(gui, textvariable=jobber_path, width=40).grid(row=1, column=1, padx=10, pady=5)
+tk.Button(gui, text="Browse", command=load_jobber_file).grid(row=1, column=2, padx=10, pady=5)
+
+tk.Label(gui, text="ACES Data File:", font=("Agency FB", 14)).grid(row=2, column=0, pady=2)
+tk.Entry(gui, textvariable=jobber_path, width=40).grid(row=2, column=1, padx=10, pady=5)
+tk.Button(gui, text="Browse", command=load_aces_data_file).grid(row=2, column=2, padx=10, pady=5)
+
+
 
 gui.mainloop()
