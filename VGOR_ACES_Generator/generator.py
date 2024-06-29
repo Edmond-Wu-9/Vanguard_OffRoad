@@ -43,4 +43,8 @@ tk.Entry(gui, textvariable=output_path, width=40).grid(row=3, column=1, padx=10,
 tk.Button(gui, text="Save As", command=gen_output_path).grid(row=3, column=2, padx=10, pady=5)
 
 
+# Buttons Section (Generate ACES Button and Exit Button)
+tk.Button(gui, text="Generate ACES").grid(row=4, column=1, padx=10, pady=5)
+tk.Button(gui, text="Exit", command=gui.quit).grid(row=4, column=2, padx=10, pady=5)
+
 gui.mainloop()
