@@ -4,8 +4,9 @@ from tkinter import filedialog, messagebox
 
 # Create a Frame for the GUI
 gui = tk.Tk()
+gui.iconbitmap("VGOR_ACES_Generator\logo.ico")
 gui.title('ACES Generator')
-gui.geometry('810x500')
+gui.geometry('810x550')
 gui.resizable(False,False)
 
 # Variables to store the file paths
