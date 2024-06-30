@@ -8,6 +8,11 @@ gui.title('ACES Generator')
 gui.geometry('810x500')
 gui.resizable(False,False)
 
+# Variables to store the file paths
+jobber_path = tk.StringVar()
+aces_data_path = tk.StringVar()
+output_path = tk.StringVar()
+
 # Function to generate the Jobber Path
 def load_jobber_file():
     jobber_path.set(filedialog.askopenfilename())
@@ -20,10 +25,15 @@ def load_aces_data_file():
 def gen_output_path():
     output_path.set(filedialog.asksaveasfilename(defaultextension=".xlsx"))
 
-# Variables to store the file paths
-jobber_path = tk.StringVar()
-aces_data_path = tk.StringVar()
-output_path = tk.StringVar()
+# Generate DataFrame for the Output File following ACES Guideline
+def output_dataframe():
+    columns = ["Part Number","Brand ID","Part Type","Part Type Description","Year","Make","Model","Submodel","Region"]
+    output_df = pd.DataFrame(columns=columns)
+    if output_path.get():
+        output_df.to_excel(output_path.get())
+        messagebox.showinfo("Success", "Output File Generated Successfully!")
+    else:
+        messagebox.showerror("Error", "Please specify a valid output path.")
 
 # Introduction for the GUI
 greeting = tk.Label(text="Welcome to the ACES Generator", font=("Agency FB", 30))
@@ -57,7 +67,8 @@ tk.Button(gui, text="Save As", command=gen_output_path).grid(row=4, column=2, pa
 
 
 # Buttons Section (Generate ACES Button and Exit Button)
-tk.Button(gui, text="Generate ACES").grid(row=5, column=1, padx=10, pady=5)
+tk.Button(gui, text="Generate ACES", command=output_dataframe).grid(row=5, column=1, padx=10, pady=5)
 tk.Button(gui, text="Exit", command=gui.quit).grid(row=5, column=2, padx=10, pady=5)
+
 
 gui.mainloop()
