@@ -36,7 +36,7 @@ def output_dataframe():
         messagebox.showerror("Error", "Please specify a valid output path.")
 
 # Introduction for the GUI
-greeting = tk.Label(text="Welcome to the ACES Generator", font=("Agency FB", 30))
+greeting = tk.Label(text="ACES Generator v1.0", font=("Agency FB", 30))
 greeting.grid(row=0 , column=0, pady=10, columnspan=3)
 
 # Description on how to use the ACES Generator
@@ -47,6 +47,7 @@ This is a tool used to generate ACES Data that you can use to copy and paste ont
 3rd Step -> Create a Output File for the Generated ACES Data.
 4th Step -> Click Generate ACES and then with the ACES Data , copy and paste into Expanded Smart Sheet
 5th Step -> Click finish when done. 
+Created by: Edmond Wu (ed.dev.1226@gmail.com)
 """
 description = tk.Label(text=description_text, justify="left" ,font=("Agency FB", 14))
 description.grid(row=1 , column=0, pady=10, padx=10, columnspan=3)
